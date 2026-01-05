@@ -11,71 +11,136 @@
         :root { --jkt-red: #d30d17; --jkt-dark-red: #a80a12; --text-dark: #333; --price-orange: #ee4d2d; }
 
         /* --- Header Atas --- */
-        .top-header { background-color: white; padding: 10px 50px; display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #ddd; }
+       .top-header { background-color: white; padding: 10px 50px; display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #ddd; }
         .logo-area { display: flex; align-items: center; gap: 15px; text-decoration: none; }
-        .logo-cropper { width: 50px; height: 50px; border-radius: 50%; overflow: hidden; display: flex; align-items: center; justify-content: center; border: 2px solid var(--jkt-red); box-shadow: 0 2px 5px rgba(0,0,0,0.2); }
-        .site-logo { width: 100%; height: auto; object-fit: cover; }
+        .logo-cropper { width: 50px; height: 50px; overflow: hidden; display: flex; align-items: center; justify-content: center; margin-right: 10px; border-radius: 50%; border: 2px solid var(--jkt-red); }
+        .site-logo { width: 100%; height: 100%; object-fit: cover; }
         .site-title h1 { font-size: 20px; color: var(--text-dark); margin: 0; font-weight: 800; }
         .auth-area a { text-decoration: none; color: var(--jkt-red); margin: 0 5px; font-weight: bold; font-size: 12px; }
 
+        
         /* --- Navigasi Merah --- */
         .main-nav { background-color: var(--jkt-red); position: sticky; top: 0; z-index: 1000; box-shadow: 0 4px 6px rgba(0,0,0,0.1); }
         .nav-container { max-width: 1200px; margin: 0 auto; display: flex; justify-content: center; align-items: center; }
         .main-nav ul { list-style: none; display: flex; width: 100%; transition: all 0.3s ease-out; }
-        .main-nav li { flex: 1; text-align: center; border-right: 1px solid rgba(255,255,255,0.2); }
+        .main-nav li { flex: 1; text-align: center; border-right: 1px solid rgba(255,255,255,0.2); position: relative; }
         .main-nav li:last-child { border-right: none; }
-        .main-nav a { display: block; padding: 15px 0; color: white; text-decoration: none; font-weight: bold; font-size: 14px; text-transform: uppercase; transition: background 0.3s; }
+        .main-nav a { display: block; padding: 15px 0; color: white; text-decoration: none; font-weight: bold; font-size: 14px; text-transform: uppercase; transition: background 0.3s; cursor: pointer; }
         .main-nav a:hover { background-color: var(--jkt-dark-red); }
         .cart-badge { background: white; color: var(--jkt-red); padding: 2px 6px; border-radius: 50%; font-size: 12px; margin-left: 5px; }
-        
+
+        /* Tombol Hamburger */
         .menu-toggle { display: none; flex-direction: column; cursor: pointer; padding: 15px; position: absolute; left: 20px; top: 0; z-index: 101; }
         .bar { width: 25px; height: 3px; background-color: white; margin: 3px 0; border-radius: 3px; transition: 0.4s; }
 
         /* --- Konten Utama --- */
         .main-content { flex: 1; width: 100%; }
 
-        /* --- PRODUK SECTION (MODIFIKASI: 6 Kolom) --- */
-        .product-section { padding: 40px 20px; background-color: #f4f4f4; max-width: 1300px; /* Lebar ditambah */ margin: 0 auto; }
-        .section-title { font-size: 26px; color: var(--text-dark); margin-bottom: 30px; text-transform: uppercase; font-weight: bold; border-bottom: 3px solid var(--jkt-red); display: inline-block; padding-bottom: 5px; }
+        /* --- Hero Slider --- */
+        .hero-slider-container { position: relative; overflow: hidden; height: 400px; background-color: #333; }
+        .slider-track { display: flex; height: 100%; transition: transform 0.5s ease-in-out; }
+        .slide { min-width: 100%; height: 100%; display: flex; justify-content: center; align-items: center; background-color: #eee; }
+        .slide img { width: 100%; height: 100%; object-fit: cover; }
+        .dots-container { position: absolute; bottom: 20px; left: 50%; transform: translateX(-50%); display: flex; gap: 10px; z-index: 10; }
+        .dot { height: 10px; width: 10px; background-color: rgba(255,255,255,0.5); border-radius: 50%; cursor: pointer; }
+        .dot.active { background-color: var(--jkt-red); }
 
-        .product-grid { 
-            display: grid; 
-            /* MODIFIKASI UTAMA: 6 Kolom sama rata */
-            grid-template-columns: repeat(6, 1fr); 
-            gap: 15px; 
-            margin-top: 20px; 
-        }
+        /* --- DIAGRAM SECTION --- */
+        .diagram-section { background-color: #fff; padding: 50px 20px; text-align: center; border-bottom: 1px solid #ddd; }
+        .section-title { font-size: 26px; color: var(--text-dark); margin-bottom: 40px; text-transform: uppercase; font-weight: bold; }
+        .diagram-container { display: flex; justify-content: center; align-items: flex-start; gap: 10px; max-width: 1000px; margin: 0 auto; flex-wrap: wrap; }
+        .diag-box { border: 2px solid #333; background: white; padding: 20px; width: 200px; height: 100px; display: flex; align-items: center; justify-content: center; font-weight: bold; font-size: 16px; box-shadow: 4px 4px 0px rgba(0,0,0,0.1); z-index: 2; }
+        .center-box { border: 3px solid var(--jkt-red); width: 250px; height: 120px; margin-top: 70px; z-index: 2; color: var(--jkt-red); font-size: 18px; text-transform: uppercase; }
+        .arrow-wrapper { display: flex; align-items: center; width: 80px; position: relative; z-index: 1; }
+        .arrow-wrapper:nth-child(2) { margin-top: 60px; transform: rotate(30deg); }
+        .arrow-wrapper:nth-child(4) { margin-top: 60px; transform: rotate(-30deg); }
+        .arrow-line { width: 100%; height: 3px; background-color: #333; }
+        .arrow-head-right { width: 0; height: 0; border-top: 10px solid transparent; border-bottom: 10px solid transparent; border-left: 15px solid #333; }
+        .arrow-head-left { width: 0; height: 0; border-top: 10px solid transparent; border-bottom: 10px solid transparent; border-right: 15px solid #333; }
 
+        /* --- PRODUK SECTION --- */
+        .product-section { padding: 40px 20px; background-color: #f4f4f4; max-width: 1200px; margin: 0 auto; }
+        .product-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); gap: 15px; margin-top: 20px; }
         .product-card { background: white; border: 1px solid #e0e0e0; border-radius: 5px; overflow: hidden; transition: transform 0.2s; cursor: pointer; display: flex; flex-direction: column; }
         .product-card:hover { transform: translateY(-3px); box-shadow: 0 4px 10px rgba(0,0,0,0.1); border-color: var(--jkt-red); }
-
-        .prod-img-box { width: 100%; height: 160px; position: relative; background: #fafafa; }
+        .prod-img-box { width: 100%; height: 180px; position: relative; background: #fafafa; }
         .prod-img-box img { width: 100%; height: 100%; object-fit: cover; }
-        
         .discount-badge { position: absolute; top: 0; right: 0; background: #ffe97a; color: #ea4c0b; padding: 2px 6px; font-size: 11px; font-weight: bold; }
         .mall-badge { position: absolute; top: 5px; left: 5px; background: var(--jkt-red); color: white; padding: 2px 6px; font-size: 10px; border-radius: 2px; font-weight: bold; }
-
         .prod-info { padding: 10px; flex: 1; display: flex; flex-direction: column; justify-content: space-between; }
-        .prod-title { font-size: 12px; color: #333; line-height: 1.4; margin-bottom: 5px; overflow: hidden; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; height: 34px; }
-        .prod-price { font-size: 14px; color: var(--price-orange); font-weight: bold; margin-bottom: 5px; }
-        .prod-meta { font-size: 10px; color: #888; display: flex; justify-content: space-between; align-items: center; }
+        .prod-title { font-size: 13px; color: #333; line-height: 1.4; margin-bottom: 5px; overflow: hidden; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; }
+        .prod-price { font-size: 16px; color: var(--price-orange); font-weight: bold; margin-bottom: 5px; }
+        .prod-meta { font-size: 11px; color: #888; display: flex; justify-content: space-between; align-items: center; }
+
+        /* --- FITUR TOMBOL (MODIFIKASI) --- */
+        .product-buttons {
+            display: flex;
+            border-top: 1px solid #eee;
+        }
+        .btn-add-cart, .btn-buy-now {
+            flex: 1;
+            padding: 10px;
+            border: none;
+            cursor: pointer;
+            font-weight: bold;
+            font-size: 12px;
+            transition: 0.3s;
+        }
+        .btn-add-cart {
+            background-color: white;
+            color: var(--jkt-red);
+            border-right: 1px solid #eee;
+        }
+        .btn-add-cart:hover { background-color: #fff0f0; }
+        
+        .btn-buy-now {
+            background-color: var(--jkt-red);
+            color: white;
+        }
+        .btn-buy-now:hover { background-color: var(--jkt-dark-red); }
+
+        /* --- POPUP KERANJANG --- */
+        .cart-overlay {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.5); z-index: 9999;
+            display: none; justify-content: center; align-items: center;
+        }
+        .cart-overlay.active { display: flex; }
+        
+        .cart-box {
+            background: white; width: 90%; max-width: 400px;
+            border-radius: 8px; overflow: hidden;
+            display: flex; flex-direction: column;
+            max-height: 80vh;
+        }
+        .cart-header {
+            background: var(--jkt-red); color: white; padding: 15px;
+            display: flex; justify-content: space-between; align-items: center; font-weight: bold;
+        }
+        .cart-body { padding: 15px; overflow-y: auto; flex: 1; }
+        .cart-footer { padding: 15px; border-top: 1px solid #ddd; background: #f9f9f9; }
+        
+        .cart-item { display: flex; justify-content: space-between; margin-bottom: 10px; border-bottom: 1px solid #eee; padding-bottom: 5px; }
+        .item-details h4 { font-size: 14px; margin: 0; }
+        .item-details p { font-size: 12px; color: #666; margin: 0; }
+        .btn-remove { color: red; cursor: pointer; font-size: 18px; }
+
+        .btn-checkout {
+            background: #25D366; /* Warna WA */
+            color: white; width: 100%; padding: 10px; border: none; border-radius: 5px; font-weight: bold; cursor: pointer;
+        }
 
         /* --- Footer --- */
         footer { background-color: #222; color: white; padding: 40px 20px 20px; margin-top: auto; }
         .footer-container { max-width: 1200px; margin: 0 auto; display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 30px; text-align: left; }
         .footer-col h3 { color: var(--jkt-red); margin-bottom: 20px; font-size: 16px; text-transform: uppercase; border-bottom: 2px solid var(--jkt-red); display: inline-block; padding-bottom: 5px; }
+        .footer-col p { font-size: 14px; line-height: 1.6; color: #ccc; }
         .footer-col ul { list-style: none; }
         .footer-col ul li { margin-bottom: 10px; }
         .footer-col ul li a { color: #ccc; text-decoration: none; transition: color 0.3s; }
-        .footer-col ul li a:hover { color: var(--jkt-red); padding-left: 5px; }
         .copyright { text-align: center; border-top: 1px solid #444; padding-top: 20px; margin-top: 40px; font-size: 13px; color: #777; }
 
         /* Media Queries */
-        @media screen and (max-width: 1024px) {
-            /* Tablet: 4 Kolom */
-            .product-grid { grid-template-columns: repeat(4, 1fr); }
-        }
-
         @media screen and (max-width: 768px) {
             .top-header { flex-direction: column; padding: 15px; gap: 15px; text-align: center; }
             .logo-area { flex-direction: column; gap: 10px; }
@@ -89,11 +154,14 @@
             .menu-toggle.active .bar:nth-child(2) { opacity: 0; }
             .menu-toggle.active .bar:nth-child(3) { transform: rotate(45deg) translate(-5px, -6px); }
             .hero-slider-container { height: 200px; }
-            
-            /* HP: 2 Kolom (Standar Toko Online) */
+            .diagram-container { flex-direction: column; align-items: center; gap: 0; }
+            .center-box { margin-top: 0; }
+            .arrow-wrapper { width: 3px; height: 40px; flex-direction: column; margin-top: 0 !important; transform: none !important; }
+            .arrow-line { width: 3px; height: 100%; }
+            .arrow-head-right { border-left: 8px solid transparent; border-right: 8px solid transparent; border-top: 10px solid #333; border-bottom: none; }
+            .arrow-head-left { display: none; } 
+            .arrow-wrapper::after { content: ''; width: 0; height: 0; border-left: 8px solid transparent; border-right: 8px solid transparent; border-top: 10px solid #333; }
             .product-grid { grid-template-columns: repeat(2, 1fr); gap: 10px; }
-            .product-section { padding: 20px 10px; }
-            
             .footer-container { text-align: center; }
         }
     </style>
@@ -109,26 +177,38 @@
                 <h1>PT. BHASKARA JAYA</h1>
             </div>
         </a>
+        <div class="auth-area">
+            <a href="#">Login</a> / <a href="#">Register</a>
+        </div>
     </header>
 
     <nav class="main-nav">
         <div class="menu-toggle" onclick="toggleMenu()">
-            <span class="bar"></span><span class="bar"></span><span class="bar"></span>
+            <span class="bar">
+            </span><span class="bar">
+            </span><span class="bar">
+            </span>
         </div>
         <div class="nav-container">
             <ul id="nav-menu">
                 <li><a href="index.html">HOME</a></li>
-                <li><a href="produk.html">PRODUK</a></li>
+                <li><a href="#produk">PRODUK</a></li>
                 <li><a href="tentangkami.html">TENTANG KAMI</a></li>
                 <li><a href="contact.html">CONTACT</a></li>
-                <li><a href="#">KERANJANG</a></li>
+                <li><a onclick="toggleCart()">KERANJANG <span class="cart-badge">0</span></a></li>
             </ul>
         </div>
     </nav>
+
+    <div class="main-content">
+        <div class="hero-slider-container">
+            <div class="slider-track">
+                <div class="slide"><img src="https://i.imgur.com/Yq0APSj.jpeg" alt="Slide 1"></div>
+                <div class="slide"><img src="https://i.imgur.com/Db20Azt.jpeg" alt="Slide 2"></div>
+                <div class="slide"><img src="https://i.imgur.com/5jcs5Cr.jpeg" alt="Slide 3"></div>
+            </div>
             <div class="dots-container">
-                <span class="dot active" onclick="currentSlide(1)"></span>
-                <span class="dot" onclick="currentSlide(2)"></span>
-                <span class="dot" onclick="currentSlide(3)"></span>
+                <span class="dot active"></span><span class="dot"></span><span class="dot"></span>
             </div>
         </div>
 
@@ -137,97 +217,99 @@
             <div class="product-grid">
 
                 <div class="product-card">
-                    <div class="prod-img-box">
-                        <span class="mall-badge">Mall</span>
-                        <span class="discount-badge">7%</span>
-                        <img src="https://images.unsplash.com/photo-1632661674596-df8be070a5c5?w=500&auto=format&fit=crop" alt="iPhone">
-                    </div>
-                    <div class="prod-info">
-                        <div class="prod-title">iPhone 13 128GB Brand New Resmi Indo Garansi 1 Tahun</div>
-                        <div class="prod-price">Rp8.587.000</div>
-                        <div class="prod-meta"><span>Jakarta</span><span>10rb+ Terjual</span></div>
+                    <div class="prod-img-box"><span class="mall-badge">Mall</span><img src="https://images.unsplash.com/photo-1632661674596-df8be070a5c5?w=500&auto=format&fit=crop" alt="iPhone"></div>
+                    <div class="prod-info"><div class="prod-title">iPhone 13 128GB Brand New Resmi Indo</div><div class="prod-price">Rp8.587.000</div><div class="prod-meta"><span>Jakarta</span><span>10rb+ Terjual</span></div></div>
+                    <div class="product-buttons">
+                        <button class="btn-add-cart" onclick="addToCart('iPhone 13 128GB', 8587000)">+ Keranjang</button>
+                        <button class="btn-buy-now" onclick="buyNow('iPhone 13 128GB', 8587000)">Beli Sekarang</button>
                     </div>
                 </div>
 
                 <div class="product-card">
-                    <div class="prod-img-box">
-                        <span class="mall-badge" style="background: purple;">Star</span>
-                        <img src="https://i.imgur.com/FJLaEUd.jpeg" alt="Akun ML">
-                    </div>
-                    <div class="prod-info">
-                        <div class="prod-title">Akun Sultan MLBB Full Skin Legend & Collector Rank Mythic</div>
-                        <div class="prod-price">Rp5.000.000</div>
-                        <div class="prod-meta"><span>Sidoarjo</span><span>149 Skin</span></div>
+                    <div class="prod-img-box"><span class="mall-badge" style="background: purple;">Star</span><img src="https://i.imgur.com/FJLaEUd.jpeg" alt="MLBB"></div>
+                    <div class="prod-info"><div class="prod-title">Akun Sultan MLBB Full Skin Legend</div><div class="prod-price">Rp5.000.000</div><div class="prod-meta"><span>Sidoarjo</span><span>149 Skin</span></div></div>
+                    <div class="product-buttons">
+                        <button class="btn-add-cart" onclick="addToCart('Akun MLBB Sultan', 5000000)">+ Keranjang</button>
+                        <button class="btn-buy-now" onclick="buyNow('Akun MLBB Sultan', 5000000)">Beli Sekarang</button>
                     </div>
                 </div>
 
                 <div class="product-card">
-                    <div class="prod-img-box">
-                        <span class="discount-badge">4%</span>
-                        <img src="https://down-id.img.susercontent.com/file/id-11134207-7r98o-lm6j6y7l0s9f2e" alt="Sweety">
-                    </div>
-                    <div class="prod-info">
-                        <div class="prod-title">Sweety Bronze Dry X-Pert Pants M 34 / L 30</div>
-                        <div class="prod-price">Rp41.100</div>
-                        <div class="prod-meta"><span>Jakarta</span><span>3rb+ Terjual</span></div>
+                    <div class="prod-img-box"><span class="discount-badge">4%</span><img src="https://down-id.img.susercontent.com/file/id-11134207-7r98o-lm6j6y7l0s9f2e" alt="Sweety"></div>
+                    <div class="prod-info"><div class="prod-title">Sweety Bronze Dry X-Pert Pants M 34</div><div class="prod-price">Rp41.100</div><div class="prod-meta"><span>Jakarta</span><span>3rb+ Terjual</span></div></div>
+                    <div class="product-buttons">
+                        <button class="btn-add-cart" onclick="addToCart('Sweety Bronze M34', 41100)">+ Keranjang</button>
+                        <button class="btn-buy-now" onclick="buyNow('Sweety Bronze M34', 41100)">Beli Sekarang</button>
                     </div>
                 </div>
 
                 <div class="product-card">
-                    <div class="prod-img-box">
-                        <img src="https://assets.klikindomaret.com/products/20054761/20054761_1.jpg" alt="SunCo">
-                    </div>
-                    <div class="prod-info">
-                        <div class="prod-title">PROMO MURAH BANGET!!! Minyak Goreng SunCo 2 Liter</div>
-                        <div class="prod-price">Rp30.000</div>
-                        <div class="prod-meta"><span>Banyuwangi</span><span>2rb+ Terjual</span></div>
+                    <div class="prod-img-box"><img src="https://assets.klikindomaret.com/products/20054761/20054761_1.jpg" alt="Minyak"></div>
+                    <div class="prod-info"><div class="prod-title">Minyak Goreng SunCo 2 Liter Pouch</div><div class="prod-price">Rp30.000</div><div class="prod-meta"><span>Banyuwangi</span><span>2rb+ Terjual</span></div></div>
+                    <div class="product-buttons">
+                        <button class="btn-add-cart" onclick="addToCart('Minyak SunCo 2L', 30000)">+ Keranjang</button>
+                        <button class="btn-buy-now" onclick="buyNow('Minyak SunCo 2L', 30000)">Beli Sekarang</button>
                     </div>
                 </div>
 
                 <div class="product-card">
-                    <div class="prod-img-box">
-                        <span class="discount-badge">30%</span>
-                        <img src="https://images.tokopedia.net/img/cache/500-square/VqbcmM/2023/10/24/370d074b-0128-4ef7-b24e-37f2231b0e3e.jpg" alt="Monitor">
-                    </div>
-                    <div class="prod-info">
-                        <div class="prod-title">GOOJODOQ 15,6" FHD 1080P Portable Monitor HDR IPS</div>
-                        <div class="prod-price">Rp1.530.000</div>
-                        <div class="prod-meta"><span>Tangerang</span><span>750+ Terjual</span></div>
+                    <div class="prod-img-box"><span class="discount-badge">30%</span><img src="https://images.tokopedia.net/img/cache/500-square/VqbcmM/2023/10/24/370d074b-0128-4ef7-b24e-37f2231b0e3e.jpg" alt="Monitor"></div>
+                    <div class="prod-info"><div class="prod-title">GOOJODOQ 15,6" FHD 1080P Portable Monitor</div><div class="prod-price">Rp1.530.000</div><div class="prod-meta"><span>Tangerang</span><span>750+ Terjual</span></div></div>
+                    <div class="product-buttons">
+                        <button class="btn-add-cart" onclick="addToCart('Monitor Portable', 1530000)">+ Keranjang</button>
+                        <button class="btn-buy-now" onclick="buyNow('Monitor Portable', 1530000)">Beli Sekarang</button>
                     </div>
                 </div>
 
                 <div class="product-card">
-                    <div class="prod-img-box">
-                        <span class="discount-badge">55%</span>
-                        <img src="https://down-id.img.susercontent.com/file/id-11134207-7r98o-lxn5x6y5l0s9f2e" alt="Kasur">
-                    </div>
-                    <div class="prod-info">
-                        <div class="prod-title">Kasur Busa Inoac Asli Garansi 10 Tahun Empuk Nyaman</div>
-                        <div class="prod-price">Rp350.000</div>
-                        <div class="prod-meta"><span>Bekasi</span><span>1rb+ Terjual</span></div>
+                    <div class="prod-img-box"><span class="discount-badge">55%</span><img src="https://down-id.img.susercontent.com/file/id-11134207-7r98o-lxn5x6y5l0s9f2e" alt="Kasur"></div>
+                    <div class="prod-info"><div class="prod-title">Kasur Busa Inoac Asli Garansi 10 Tahun</div><div class="prod-price">Rp350.000</div><div class="prod-meta"><span>Bekasi</span><span>1rb+ Terjual</span></div></div>
+                    <div class="product-buttons">
+                        <button class="btn-add-cart" onclick="addToCart('Kasur Inoac', 350000)">+ Keranjang</button>
+                        <button class="btn-buy-now" onclick="buyNow('Kasur Inoac', 350000)">Beli Sekarang</button>
                     </div>
                 </div>
 
-                </div>
+            </div>
         </section>
     </div>
 
-    <footer>
+    <div class="cart-overlay" id="cartOverlay">
+        <div class="cart-box">
+            <div class="cart-header">
+                <span>Keranjang Belanja</span>
+                <span onclick="toggleCart()" style="cursor:pointer; font-size:20px;">✕</span>
+            </div>
+            <div class="cart-body" id="cartItems">
+                <p style="text-align:center; color:#888;">Keranjang Anda masih kosong.</p>
+            </div>
+            <div class="cart-footer">
+                <div style="display:flex; justify-content:space-between; font-weight:bold; margin-bottom:10px;">
+                    <span>Total:</span>
+                    <span id="cartTotal">Rp0</span>
+                </div>
+                <button class="btn-checkout" onclick="checkoutWhatsApp()">Checkout Keranjang via WhatsApp</button>
+            </div>
+        </div>
+    </div>
+
+   <footer>
         <div class="footer-container">
             <div class="footer-col">
                 <h3>PT. Bhaskara Jaya</h3>
                 <p>
                     <strong>Alamat Kantor:</strong><br>
                     PERUMAHAN TAMASA BHASKARA<br>
-                    Sidoarjo, Jawa Timur, Indonesia
+                    Sidoarjo, Jawa Timur, Indonesia.
                 </p>
                 <br>
                 <p>
                     <strong>Hubungi Kami:</strong><br>
-                    Email: info@bhaskara.com<br>
+                    Email: infoBhaskara@gmail.com<br>
                     WhatsApp: +62 857-0664-9837
                 </p>
             </div>
+
             <div class="footer-col">
                 <h3>Daftar Jualan</h3>
                 <ul>
@@ -238,15 +320,17 @@
                     <li><a href="#">Top Up & Jasa</a></li>
                 </ul>
             </div>
+
             <div class="footer-col">
                 <h3>Menu Cepat</h3>
                 <ul>
                     <li><a href="#">Beranda</a></li>
-                    <li><a href="#produk">Katalog Produk</a></li>
+                    <li><a href="#">Katalog Produk</a></li>
                     <li><a href="#">Cara Pemesanan</a></li>
                     <li><a href="#">Syarat & Ketentuan</a></li>
                 </ul>
             </div>
+
             <div class="footer-col">
                 <h3>Ikuti Kami</h3>
                 <ul>
@@ -257,13 +341,126 @@
                 </ul>
             </div>
         </div>
+
         <div class="copyright">
             &copy; 2025 PT. Bhaskara Jaya. All Rights Reserved. <br>
-            Founded by Muhammad Roisul Faris.
         </div>
     </footer>
 
     <script>
+        // --- DATA KERANJANG ---
+        let cart = [];
+
+        // Fungsi Tambah ke Keranjang
+        function addToCart(productName, price) {
+            const existingItem = cart.find(item => item.name === productName);
+            if (existingItem) {
+                existingItem.qty++;
+            } else {
+                cart.push({ name: productName, price: price, qty: 1 });
+            }
+            updateCartDisplay();
+            alert("✅ " + productName + " berhasil masuk keranjang!");
+        }
+
+        // Fungsi Beli Sekarang (Langsung ke WA)
+        function buyNow(productName, price) {
+            let message = "Halo Admin PT. Bhaskara Jaya, saya mau beli produk ini secara langsung:%0A%0A";
+            message += `- ${productName} (1x) = Rp${price.toLocaleString()}%0A`;
+            message += `%0A*Total Bayar: Rp${price.toLocaleString()}*`;
+            message += "%0A%0AMohon info pembayaran selanjutnya. Terima kasih!";
+            
+            const phoneNumber = "6285706649837"; 
+            window.open(`https://wa.me/${phoneNumber}?text=${message}`, '_blank');
+        }
+
+        // Fungsi Hapus Barang
+        function removeFromCart(index) {
+            cart.splice(index, 1);
+            updateCartDisplay();
+        }
+
+        // Fungsi Update Tampilan Keranjang
+        function updateCartDisplay() {
+            const cartList = document.getElementById('cartItems');
+            const totalEl = document.getElementById('cartTotal');
+            const badge = document.querySelector('.cart-badge');
+            
+            cartList.innerHTML = '';
+            let totalPrice = 0;
+            let totalQty = 0;
+
+            if (cart.length === 0) {
+                cartList.innerHTML = '<p style="text-align:center; color:#888;">Keranjang Anda masih kosong.</p>';
+            } else {
+                cart.forEach((item, index) => {
+                    totalPrice += item.price * item.qty;
+                    totalQty += item.qty;
+                    const itemHTML = `
+                        <div class="cart-item">
+                            <div class="item-details">
+                                <h4>${item.name}</h4>
+                                <p>Rp${item.price.toLocaleString()} x ${item.qty}</p>
+                            </div>
+                            <div class="btn-remove" onclick="removeFromCart(${index})">🗑️</div>
+                        </div>
+                    `;
+                    cartList.innerHTML += itemHTML;
+                });
+            }
+            totalEl.innerText = 'Rp' + totalPrice.toLocaleString();
+            badge.innerText = totalQty;
+        }
+
+        function toggleCart() {
+            const overlay = document.getElementById('cartOverlay');
+            overlay.classList.toggle('active');
+        }
+
+        // Fungsi Checkout Keranjang
+        function checkoutWhatsApp() {
+            if (cart.length === 0) {
+                alert("Keranjang kosong! Silakan pilih barang dulu.");
+                return;
+            }
+            let message = "Halo Admin PT. Bhaskara Jaya, saya mau pesan via Keranjang:%0A%0A";
+            let grandTotal = 0;
+            cart.forEach(item => {
+                let subtotal = item.price * item.qty;
+                grandTotal += subtotal;
+                message += `- ${item.name} (${item.qty}x) = Rp${subtotal.toLocaleString()}%0A`;
+            });
+            message += `%0A*Total Bayar: Rp${grandTotal.toLocaleString()}*`;
+            message += "%0A%0AMohon info pembayaran selanjutnya. Terima kasih!";
+            const phoneNumber = "6285706649837"; 
+            window.open(`https://wa.me/${phoneNumber}?text=${message}`, '_blank');
+        }
+
+        // --- SLIDER & MENU ---
+        let slideIndex = 0;
+        const track = document.querySelector('.slider-track');
+        const dots = document.getElementsByClassName("dot");
+        const slides = document.getElementsByClassName("slide");
+        const totalSlides = slides.length; 
+
+        function startAutoSlide() {
+            setInterval(() => {
+                slideIndex++;
+                if (slideIndex >= totalSlides) slideIndex = 0;
+                updateSliderPosition();
+            }, 3000);
+        }
+
+        function updateSliderPosition() {
+            track.style.transform = `translateX(-${slideIndex * 100}%)`;
+            for (let i = 0; i < dots.length; i++) dots[i].className = dots[i].className.replace(" active", "");
+            if(dots[slideIndex]) dots[slideIndex].className += " active";
+        }
+
+        function currentSlide(n) {
+            slideIndex = n - 1;
+            updateSliderPosition();
+        }
 
         function toggleMenu() {
             const navMenu = document.getElementById('nav-menu');

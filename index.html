@@ -283,6 +283,72 @@
             to { opacity: 1; transform: translateX(0); }
         }
 
+          /* --- POPUP KERANJANG --- */
+        .cart-overlay {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.5); z-index: 9999;
+            display: none; justify-content: center; align-items: center;
+        }
+        .cart-overlay.active { display: flex; }
+        
+        .cart-box {
+            background: white; width: 90%; max-width: 400px;
+            border-radius: 8px; overflow: hidden;
+            display: flex; flex-direction: column;
+            max-height: 80vh;
+        }
+        .cart-header {
+            background: var(--jkt-red); color: white; padding: 15px;
+            display: flex; justify-content: space-between; align-items: center; font-weight: bold;
+        }
+        .cart-body { padding: 15px; overflow-y: auto; flex: 1; }
+        .cart-footer { padding: 15px; border-top: 1px solid #ddd; background: #f9f9f9; }
+        
+        .cart-item { display: flex; justify-content: space-between; margin-bottom: 10px; border-bottom: 1px solid #eee; padding-bottom: 5px; }
+        .item-details h4 { font-size: 14px; margin: 0; }
+        .item-details p { font-size: 12px; color: #666; margin: 0; }
+        .btn-remove { color: red; cursor: pointer; font-size: 18px; }
+
+        .btn-checkout {
+            background: #25D366; /* Warna WA */
+            color: white; width: 100%; padding: 10px; border: none; border-radius: 5px; font-weight: bold; cursor: pointer;
+        }
+
+        /* --- Footer --- */
+        footer { background-color: #222; color: white; padding: 40px 20px 20px; margin-top: auto; }
+        .footer-container { max-width: 1200px; margin: 0 auto; display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 30px; text-align: left; }
+        .footer-col h3 { color: var(--jkt-red); margin-bottom: 20px; font-size: 16px; text-transform: uppercase; border-bottom: 2px solid var(--jkt-red); display: inline-block; padding-bottom: 5px; }
+        .footer-col p { font-size: 14px; line-height: 1.6; color: #ccc; }
+        .footer-col ul { list-style: none; }
+        .footer-col ul li { margin-bottom: 10px; }
+        .footer-col ul li a { color: #ccc; text-decoration: none; transition: color 0.3s; }
+        .copyright { text-align: center; border-top: 1px solid #444; padding-top: 20px; margin-top: 40px; font-size: 13px; color: #777; }
+
+        /* Media Queries */
+        @media screen and (max-width: 768px) {
+            .top-header { flex-direction: column; padding: 15px; gap: 15px; text-align: center; }
+            .logo-area { flex-direction: column; gap: 10px; }
+            .main-nav { min-height: 50px; display: flex; align-items: center; }
+            .menu-toggle { display: flex; left: 20px; right: auto; }
+            .nav-container { width: 100%; display: block; }
+            .main-nav ul { display: none; flex-direction: column; position: absolute; top: 50px; left: 0; width: 70%; background: var(--jkt-dark-red); height: 100vh; padding-top: 20px; }
+            .main-nav ul.active { display: flex; }
+            .main-nav li { border-bottom: 1px solid rgba(255,255,255,0.1); text-align: left; padding-left: 20px; }
+            .menu-toggle.active .bar:nth-child(1) { transform: rotate(-45deg) translate(-5px, 6px); }
+            .menu-toggle.active .bar:nth-child(2) { opacity: 0; }
+            .menu-toggle.active .bar:nth-child(3) { transform: rotate(45deg) translate(-5px, -6px); }
+            .hero-slider-container { height: 200px; }
+            .diagram-container { flex-direction: column; align-items: center; gap: 0; }
+            .center-box { margin-top: 0; }
+            .arrow-wrapper { width: 3px; height: 40px; flex-direction: column; margin-top: 0 !important; transform: none !important; }
+            .arrow-line { width: 3px; height: 100%; }
+            .arrow-head-right { border-left: 8px solid transparent; border-right: 8px solid transparent; border-top: 10px solid #333; border-bottom: none; }
+            .arrow-head-left { display: none; } 
+            .arrow-wrapper::after { content: ''; width: 0; height: 0; border-left: 8px solid transparent; border-right: 8px solid transparent; border-top: 10px solid #333; }
+            .product-grid { grid-template-columns: repeat(2, 1fr); gap: 10px; }
+            .footer-container { text-align: center; }
+        }
+
     </style>
 </head>
 <body>
@@ -293,7 +359,7 @@
                 <img src="https://i.imgur.com/ynvGuL4.jpeg" class="site-logo" alt="Logo">
             </div>
             <div class="site-title">
-                <h1>PT. BHASKARA JAYA</h1>
+                <h1>PT. Bhaskara Jaya</h1>
             </div>
         </div>
     </header>
@@ -311,7 +377,7 @@
                 <li><a href="produk.html">PRODUK</a></li>
                 <li><a href="tentangkami.html">TENTANG KAMI</a></li>
                 <li><a href="contact.html">CONTACT</a></li>
-                <li><a href="#">KERANJANG</a></li>
+               <li><a onclick="toggleCart()">KERANJANG <span class="cart-badge">0</span></a></li>
             </ul>
         </div>
     </nav>
@@ -429,6 +495,94 @@
     </footer>
 
     <script>
+   // --- DATA KERANJANG ---
+        let cart = [];
+
+        // Fungsi Tambah ke Keranjang
+        function addToCart(productName, price) {
+            const existingItem = cart.find(item => item.name === productName);
+            if (existingItem) {
+                existingItem.qty++;
+            } else {
+                cart.push({ name: productName, price: price, qty: 1 });
+            }
+            updateCartDisplay();
+            alert("✅ " + productName + " berhasil masuk keranjang!");
+        }
+
+        // Fungsi Beli Sekarang (Langsung ke WA)
+        function buyNow(productName, price) {
+            let message = "Halo Admin PT. Bhaskara Jaya, saya mau beli produk ini secara langsung:%0A%0A";
+            message += `- ${productName} (1x) = Rp${price.toLocaleString()}%0A`;
+            message += `%0A*Total Bayar: Rp${price.toLocaleString()}*`;
+            message += "%0A%0AMohon info pembayaran selanjutnya. Terima kasih!";
+            
+            const phoneNumber = "6285706649837"; 
+            window.open(`https://wa.me/${phoneNumber}?text=${message}`, '_blank');
+        }
+
+        // Fungsi Hapus Barang
+        function removeFromCart(index) {
+            cart.splice(index, 1);
+            updateCartDisplay();
+        }
+
+        // Fungsi Update Tampilan Keranjang
+        function updateCartDisplay() {
+            const cartList = document.getElementById('cartItems');
+            const totalEl = document.getElementById('cartTotal');
+            const badge = document.querySelector('.cart-badge');
+            
+            cartList.innerHTML = '';
+            let totalPrice = 0;
+            let totalQty = 0;
+
+            if (cart.length === 0) {
+                cartList.innerHTML = '<p style="text-align:center; color:#888;">Keranjang Anda masih kosong.</p>';
+            } else {
+                cart.forEach((item, index) => {
+                    totalPrice += item.price * item.qty;
+                    totalQty += item.qty;
+                    const itemHTML = `
+                        <div class="cart-item">
+                            <div class="item-details">
+                                <h4>${item.name}</h4>
+                                <p>Rp${item.price.toLocaleString()} x ${item.qty}</p>
+                            </div>
+                            <div class="btn-remove" onclick="removeFromCart(${index})">🗑️</div>
+                        </div>
+                    `;
+                    cartList.innerHTML += itemHTML;
+                });
+            }
+            totalEl.innerText = 'Rp' + totalPrice.toLocaleString();
+            badge.innerText = totalQty;
+        }
+
+        function toggleCart() {
+            const overlay = document.getElementById('cartOverlay');
+            overlay.classList.toggle('active');
+        }
+
+        // Fungsi Checkout Keranjang
+        function checkoutWhatsApp() {
+            if (cart.length === 0) {
+                alert("Keranjang kosong! Silakan pilih barang dulu.");
+                return;
+            }
+            let message = "Halo Admin PT. Bhaskara Jaya, saya mau pesan via Keranjang:%0A%0A";
+            let grandTotal = 0;
+            cart.forEach(item => {
+                let subtotal = item.price * item.qty;
+                grandTotal += subtotal;
+                message += `- ${item.name} (${item.qty}x) = Rp${subtotal.toLocaleString()}%0A`;
+            });
+            message += `%0A*Total Bayar: Rp${grandTotal.toLocaleString()}*`;
+            message += "%0A%0AMohon info pembayaran selanjutnya. Terima kasih!";
+            const phoneNumber = "6285706649837"; 
+            window.open(`https://wa.me/${phoneNumber}?text=${message}`, '_blank');
+        }
+
         // --- LOGIKA SLIDER ---
         let slideIndex = 0;
         const track = document.querySelector('.slider-track');

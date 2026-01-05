@@ -1,0 +1,321 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PT. Bhaskara Jaya - Toko Online & Game Store</title>
+    <style>
+        /* --- Reset & Basic Style --- */
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background-color: #f4f4f4; display: flex; flex-direction: column; min-height: 100vh; }
+        :root { --jkt-red: #d30d17; --jkt-dark-red: #a80a12; --text-dark: #333; --price-orange: #ee4d2d; }
+
+        /* --- Header Atas --- */
+        .top-header { background-color: white; padding: 10px 50px; display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #ddd; }
+        .logo-area { display: flex; align-items: center; gap: 15px; text-decoration: none; }
+        .logo-cropper { width: 50px; height: 50px; border-radius: 50%; overflow: hidden; display: flex; align-items: center; justify-content: center; border: 2px solid var(--jkt-red); box-shadow: 0 2px 5px rgba(0,0,0,0.2); }
+        .site-logo { width: 100%; height: auto; object-fit: cover; }
+        .site-title h1 { font-size: 20px; color: var(--text-dark); margin: 0; font-weight: 800; }
+        .auth-area a { text-decoration: none; color: var(--jkt-red); margin: 0 5px; font-weight: bold; font-size: 12px; }
+
+        /* --- Navigasi Merah --- */
+        .main-nav { background-color: var(--jkt-red); position: sticky; top: 0; z-index: 1000; box-shadow: 0 4px 6px rgba(0,0,0,0.1); }
+        .nav-container { max-width: 1200px; margin: 0 auto; display: flex; justify-content: center; align-items: center; }
+        .main-nav ul { list-style: none; display: flex; width: 100%; transition: all 0.3s ease-out; }
+        .main-nav li { flex: 1; text-align: center; border-right: 1px solid rgba(255,255,255,0.2); }
+        .main-nav li:last-child { border-right: none; }
+        .main-nav a { display: block; padding: 15px 0; color: white; text-decoration: none; font-weight: bold; font-size: 14px; text-transform: uppercase; transition: background 0.3s; }
+        .main-nav a:hover { background-color: var(--jkt-dark-red); }
+        .cart-badge { background: white; color: var(--jkt-red); padding: 2px 6px; border-radius: 50%; font-size: 12px; margin-left: 5px; }
+        
+        .menu-toggle { display: none; flex-direction: column; cursor: pointer; padding: 15px; position: absolute; left: 20px; top: 0; z-index: 101; }
+        .bar { width: 25px; height: 3px; background-color: white; margin: 3px 0; border-radius: 3px; transition: 0.4s; }
+
+        /* --- Konten Utama --- */
+        .main-content { flex: 1; width: 100%; }
+
+        /* --- Hero Slider --- */
+        .hero-slider-container { position: relative; overflow: hidden; height: 400px; background-color: #333; }
+        .slider-track { display: flex; height: 100%; transition: transform 0.5s ease-in-out; }
+        .slide { min-width: 100%; height: 100%; display: flex; justify-content: center; align-items: center; background-color: #eee; }
+        .slide img { width: 100%; height: 100%; object-fit: cover; }
+        .dots-container { position: absolute; bottom: 20px; left: 50%; transform: translateX(-50%); display: flex; gap: 10px; z-index: 10; }
+        .dot { height: 10px; width: 10px; background-color: rgba(255,255,255,0.5); border-radius: 50%; cursor: pointer; }
+        .dot.active { background-color: var(--jkt-red); }
+
+        /* --- PRODUK SECTION (MODIFIKASI: 6 Kolom) --- */
+        .product-section { padding: 40px 20px; background-color: #f4f4f4; max-width: 1300px; /* Lebar ditambah */ margin: 0 auto; }
+        .section-title { font-size: 26px; color: var(--text-dark); margin-bottom: 30px; text-transform: uppercase; font-weight: bold; border-bottom: 3px solid var(--jkt-red); display: inline-block; padding-bottom: 5px; }
+
+        .product-grid { 
+            display: grid; 
+            /* MODIFIKASI UTAMA: 6 Kolom sama rata */
+            grid-template-columns: repeat(6, 1fr); 
+            gap: 15px; 
+            margin-top: 20px; 
+        }
+
+        .product-card { background: white; border: 1px solid #e0e0e0; border-radius: 5px; overflow: hidden; transition: transform 0.2s; cursor: pointer; display: flex; flex-direction: column; }
+        .product-card:hover { transform: translateY(-3px); box-shadow: 0 4px 10px rgba(0,0,0,0.1); border-color: var(--jkt-red); }
+
+        .prod-img-box { width: 100%; height: 160px; position: relative; background: #fafafa; }
+        .prod-img-box img { width: 100%; height: 100%; object-fit: cover; }
+        
+        .discount-badge { position: absolute; top: 0; right: 0; background: #ffe97a; color: #ea4c0b; padding: 2px 6px; font-size: 11px; font-weight: bold; }
+        .mall-badge { position: absolute; top: 5px; left: 5px; background: var(--jkt-red); color: white; padding: 2px 6px; font-size: 10px; border-radius: 2px; font-weight: bold; }
+
+        .prod-info { padding: 10px; flex: 1; display: flex; flex-direction: column; justify-content: space-between; }
+        .prod-title { font-size: 12px; color: #333; line-height: 1.4; margin-bottom: 5px; overflow: hidden; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; height: 34px; }
+        .prod-price { font-size: 14px; color: var(--price-orange); font-weight: bold; margin-bottom: 5px; }
+        .prod-meta { font-size: 10px; color: #888; display: flex; justify-content: space-between; align-items: center; }
+
+        /* --- Footer --- */
+        footer { background-color: #222; color: white; padding: 40px 20px 20px; margin-top: auto; }
+        .footer-container { max-width: 1200px; margin: 0 auto; display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 30px; text-align: left; }
+        .footer-col h3 { color: var(--jkt-red); margin-bottom: 20px; font-size: 16px; text-transform: uppercase; border-bottom: 2px solid var(--jkt-red); display: inline-block; padding-bottom: 5px; }
+        .footer-col ul { list-style: none; }
+        .footer-col ul li { margin-bottom: 10px; }
+        .footer-col ul li a { color: #ccc; text-decoration: none; transition: color 0.3s; }
+        .footer-col ul li a:hover { color: var(--jkt-red); padding-left: 5px; }
+        .copyright { text-align: center; border-top: 1px solid #444; padding-top: 20px; margin-top: 40px; font-size: 13px; color: #777; }
+
+        /* Media Queries */
+        @media screen and (max-width: 1024px) {
+            /* Tablet: 4 Kolom */
+            .product-grid { grid-template-columns: repeat(4, 1fr); }
+        }
+
+        @media screen and (max-width: 768px) {
+            .top-header { flex-direction: column; padding: 15px; gap: 15px; text-align: center; }
+            .logo-area { flex-direction: column; gap: 10px; }
+            .main-nav { min-height: 50px; display: flex; align-items: center; }
+            .menu-toggle { display: flex; left: 20px; right: auto; }
+            .nav-container { width: 100%; display: block; }
+            .main-nav ul { display: none; flex-direction: column; position: absolute; top: 50px; left: 0; width: 70%; background: var(--jkt-dark-red); height: 100vh; padding-top: 20px; }
+            .main-nav ul.active { display: flex; }
+            .main-nav li { border-bottom: 1px solid rgba(255,255,255,0.1); text-align: left; padding-left: 20px; }
+            .menu-toggle.active .bar:nth-child(1) { transform: rotate(-45deg) translate(-5px, 6px); }
+            .menu-toggle.active .bar:nth-child(2) { opacity: 0; }
+            .menu-toggle.active .bar:nth-child(3) { transform: rotate(45deg) translate(-5px, -6px); }
+            .hero-slider-container { height: 200px; }
+            
+            /* HP: 2 Kolom (Standar Toko Online) */
+            .product-grid { grid-template-columns: repeat(2, 1fr); gap: 10px; }
+            .product-section { padding: 20px 10px; }
+            
+            .footer-container { text-align: center; }
+        }
+    </style>
+</head>
+<body>
+
+    <header class="top-header">
+        <a href="#" class="logo-area">
+            <div class="logo-cropper">
+                <img src="https://i.imgur.com/nALqu73.jpeg" class="site-logo" alt="Bhaskara FC Logo">
+            </div>
+            <div class="site-title">
+                <h1>PT. BHASKARA JAYA</h1>
+            </div>
+        </a>
+    </header>
+
+    <nav class="main-nav">
+        <div class="menu-toggle" onclick="toggleMenu()">
+            <span class="bar"></span><span class="bar"></span><span class="bar"></span>
+        </div>
+        <div class="nav-container">
+            <ul id="nav-menu">
+                <li><a href="p1.html">HOME</a></li>
+                <li><a href="#produk">PRODUK</a></li>
+                <li><a href="tentangkami.html">TENTANG KAMI</a></li>
+                <li><a href="#">CONTACT</a></li>
+                <li><a href="#">KERANJANG</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <div class="main-content">
+        <div class="hero-slider-container">
+            <div class="slider-track">
+                <div class="slide"><img src="https://i.imgur.com/Yq0APSj.jpeg" alt="Slide 1"></div>
+                <div class="slide"><img src="https://i.imgur.com/Db20Azt.jpeg" alt="Slide 2"></div>
+                <div class="slide"><img src="https://i.imgur.com/5jcs5Cr.jpeg" alt="Slide 3"></div>
+            </div>
+            <div class="dots-container">
+                <span class="dot active" onclick="currentSlide(1)"></span>
+                <span class="dot" onclick="currentSlide(2)"></span>
+                <span class="dot" onclick="currentSlide(3)"></span>
+            </div>
+        </div>
+
+        <section id="produk" class="product-section">
+            <h2 class="section-title">DAFTAR JUALAN</h2>
+            <div class="product-grid">
+
+                <div class="product-card">
+                    <div class="prod-img-box">
+                        <span class="mall-badge">Mall</span>
+                        <span class="discount-badge">7%</span>
+                        <img src="https://images.unsplash.com/photo-1632661674596-df8be070a5c5?w=500&auto=format&fit=crop" alt="iPhone">
+                    </div>
+                    <div class="prod-info">
+                        <div class="prod-title">iPhone 13 128GB Brand New Resmi Indo Garansi 1 Tahun</div>
+                        <div class="prod-price">Rp8.587.000</div>
+                        <div class="prod-meta"><span>Jakarta</span><span>10rb+ Terjual</span></div>
+                    </div>
+                </div>
+
+                <div class="product-card">
+                    <div class="prod-img-box">
+                        <span class="mall-badge" style="background: purple;">Star</span>
+                        <img src="https://i.imgur.com/FJLaEUd.jpeg" alt="Akun ML">
+                    </div>
+                    <div class="prod-info">
+                        <div class="prod-title">Akun Sultan MLBB Full Skin Legend & Collector Rank Mythic</div>
+                        <div class="prod-price">Rp5.000.000</div>
+                        <div class="prod-meta"><span>Sidoarjo</span><span>149 Skin</span></div>
+                    </div>
+                </div>
+
+                <div class="product-card">
+                    <div class="prod-img-box">
+                        <span class="discount-badge">4%</span>
+                        <img src="https://down-id.img.susercontent.com/file/id-11134207-7r98o-lm6j6y7l0s9f2e" alt="Sweety">
+                    </div>
+                    <div class="prod-info">
+                        <div class="prod-title">Sweety Bronze Dry X-Pert Pants M 34 / L 30</div>
+                        <div class="prod-price">Rp41.100</div>
+                        <div class="prod-meta"><span>Jakarta</span><span>3rb+ Terjual</span></div>
+                    </div>
+                </div>
+
+                <div class="product-card">
+                    <div class="prod-img-box">
+                        <img src="https://assets.klikindomaret.com/products/20054761/20054761_1.jpg" alt="SunCo">
+                    </div>
+                    <div class="prod-info">
+                        <div class="prod-title">PROMO MURAH BANGET!!! Minyak Goreng SunCo 2 Liter</div>
+                        <div class="prod-price">Rp30.000</div>
+                        <div class="prod-meta"><span>Banyuwangi</span><span>2rb+ Terjual</span></div>
+                    </div>
+                </div>
+
+                <div class="product-card">
+                    <div class="prod-img-box">
+                        <span class="discount-badge">30%</span>
+                        <img src="https://images.tokopedia.net/img/cache/500-square/VqbcmM/2023/10/24/370d074b-0128-4ef7-b24e-37f2231b0e3e.jpg" alt="Monitor">
+                    </div>
+                    <div class="prod-info">
+                        <div class="prod-title">GOOJODOQ 15,6" FHD 1080P Portable Monitor HDR IPS</div>
+                        <div class="prod-price">Rp1.530.000</div>
+                        <div class="prod-meta"><span>Tangerang</span><span>750+ Terjual</span></div>
+                    </div>
+                </div>
+
+                <div class="product-card">
+                    <div class="prod-img-box">
+                        <span class="discount-badge">55%</span>
+                        <img src="https://down-id.img.susercontent.com/file/id-11134207-7r98o-lxn5x6y5l0s9f2e" alt="Kasur">
+                    </div>
+                    <div class="prod-info">
+                        <div class="prod-title">Kasur Busa Inoac Asli Garansi 10 Tahun Empuk Nyaman</div>
+                        <div class="prod-price">Rp350.000</div>
+                        <div class="prod-meta"><span>Bekasi</span><span>1rb+ Terjual</span></div>
+                    </div>
+                </div>
+
+                </div>
+        </section>
+    </div>
+
+    <footer>
+        <div class="footer-container">
+            <div class="footer-col">
+                <h3>PT. Bhaskara Jaya</h3>
+                <p>
+                    <strong>Alamat Kantor:</strong><br>
+                    PERUMAHAN TAMASA BHASKARA<br>
+                    Sidoarjo, Jawa Timur, Indonesia
+                </p>
+                <br>
+                <p>
+                    <strong>Hubungi Kami:</strong><br>
+                    Email: info@bhaskara.com<br>
+                    WhatsApp: +62 857-0664-9837
+                </p>
+            </div>
+            <div class="footer-col">
+                <h3>Daftar Jualan</h3>
+                <ul>
+                    <li><a href="#">Aneka Barang</a></li>
+                    <li><a href="#">Akun Game</a></li>
+                    <li><a href="#">Jual Lapak</a></li>
+                    <li><a href="#">Makanan & Minuman</a></li>
+                    <li><a href="#">Top Up & Jasa</a></li>
+                </ul>
+            </div>
+            <div class="footer-col">
+                <h3>Menu Cepat</h3>
+                <ul>
+                    <li><a href="#">Beranda</a></li>
+                    <li><a href="#produk">Katalog Produk</a></li>
+                    <li><a href="#">Cara Pemesanan</a></li>
+                    <li><a href="#">Syarat & Ketentuan</a></li>
+                </ul>
+            </div>
+            <div class="footer-col">
+                <h3>Ikuti Kami</h3>
+                <ul>
+                    <li><a href="#">Instagram</a></li>
+                    <li><a href="#">Facebook</a></li>
+                    <li><a href="#">TikTok</a></li>
+                    <li><a href="#">Twitter / X</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="copyright">
+            &copy; 2025 PT. Bhaskara Jaya. All Rights Reserved. <br>
+            Founded by Muhammad Roisul Faris.
+        </div>
+    </footer>
+
+    <script>
+        // --- LOGIKA SLIDER ---
+        let slideIndex = 0;
+        const track = document.querySelector('.slider-track');
+        const dots = document.getElementsByClassName("dot");
+        const slides = document.getElementsByClassName("slide");
+        const totalSlides = slides.length; 
+
+        function startAutoSlide() {
+            setInterval(() => {
+                slideIndex++;
+                if (slideIndex >= totalSlides) slideIndex = 0;
+                updateSliderPosition();
+            }, 3000);
+        }
+
+        function updateSliderPosition() {
+            track.style.transform = `translateX(-${slideIndex * 100}%)`;
+            for (let i = 0; i < dots.length; i++) dots[i].className = dots[i].className.replace(" active", "");
+            dots[slideIndex].className += " active";
+        }
+
+        function currentSlide(n) {
+            slideIndex = n - 1;
+            updateSliderPosition();
+        }
+
+        function toggleMenu() {
+            const navMenu = document.getElementById('nav-menu');
+            const menuToggle = document.querySelector('.menu-toggle');
+            navMenu.classList.toggle('active');
+            menuToggle.classList.toggle('active');
+        }
+
+        document.addEventListener('DOMContentLoaded', startAutoSlide);
+    </script>
+
+</body>
+</html>
