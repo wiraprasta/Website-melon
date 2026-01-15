@@ -377,7 +377,7 @@
                 <li><a href="produk.html">PRODUK</a></li>
                 <li><a href="tentangkami.html">TENTANG KAMI</a></li>
                 <li><a href="contact.html">CONTACT</a></li>
-               <li><a onclick="toggleCart()">KERANJANG <span class="cart-badge">0</span></a></li>
+               <li><a onclick="toggleCart()">KERANJANG <span class="cart-badge"></span></a></li>
             </ul>
         </div>
     </nav>
@@ -494,94 +494,6 @@
     </footer>
 
     <script>
-   // --- DATA KERANJANG ---
-        let cart = [];
-
-        // Fungsi Tambah ke Keranjang
-        function addToCart(productName, price) {
-            const existingItem = cart.find(item => item.name === productName);
-            if (existingItem) {
-                existingItem.qty++;
-            } else {
-                cart.push({ name: productName, price: price, qty: 1 });
-            }
-            updateCartDisplay();
-            alert("✅ " + productName + " berhasil masuk keranjang!");
-        }
-
-        // Fungsi Beli Sekarang (Langsung ke WA)
-        function buyNow(productName, price) {
-            let message = "Halo Admin PT. Bhaskara Jaya, saya mau beli produk ini secara langsung:%0A%0A";
-            message += `- ${productName} (1x) = Rp${price.toLocaleString()}%0A`;
-            message += `%0A*Total Bayar: Rp${price.toLocaleString()}*`;
-            message += "%0A%0AMohon info pembayaran selanjutnya. Terima kasih!";
-            
-            const phoneNumber = "6285706649837"; 
-            window.open(`https://wa.me/${phoneNumber}?text=${message}`, '_blank');
-        }
-
-        // Fungsi Hapus Barang
-        function removeFromCart(index) {
-            cart.splice(index, 1);
-            updateCartDisplay();
-        }
-
-        // Fungsi Update Tampilan Keranjang
-        function updateCartDisplay() {
-            const cartList = document.getElementById('cartItems');
-            const totalEl = document.getElementById('cartTotal');
-            const badge = document.querySelector('.cart-badge');
-            
-            cartList.innerHTML = '';
-            let totalPrice = 0;
-            let totalQty = 0;
-
-            if (cart.length === 0) {
-                cartList.innerHTML = '<p style="text-align:center; color:#888;">Keranjang Anda masih kosong.</p>';
-            } else {
-                cart.forEach((item, index) => {
-                    totalPrice += item.price * item.qty;
-                    totalQty += item.qty;
-                    const itemHTML = `
-                        <div class="cart-item">
-                            <div class="item-details">
-                                <h4>${item.name}</h4>
-                                <p>Rp${item.price.toLocaleString()} x ${item.qty}</p>
-                            </div>
-                            <div class="btn-remove" onclick="removeFromCart(${index})">🗑️</div>
-                        </div>
-                    `;
-                    cartList.innerHTML += itemHTML;
-                });
-            }
-            totalEl.innerText = 'Rp' + totalPrice.toLocaleString();
-            badge.innerText = totalQty;
-        }
-
-        function toggleCart() {
-            const overlay = document.getElementById('cartOverlay');
-            overlay.classList.toggle('active');
-        }
-
-        // Fungsi Checkout Keranjang
-        function checkoutWhatsApp() {
-            if (cart.length === 0) {
-                alert("Keranjang kosong! Silakan pilih barang dulu.");
-                return;
-            }
-            let message = "Halo Admin PT. Bhaskara Jaya, saya mau pesan via Keranjang:%0A%0A";
-            let grandTotal = 0;
-            cart.forEach(item => {
-                let subtotal = item.price * item.qty;
-                grandTotal += subtotal;
-                message += `- ${item.name} (${item.qty}x) = Rp${subtotal.toLocaleString()}%0A`;
-            });
-            message += `%0A*Total Bayar: Rp${grandTotal.toLocaleString()}*`;
-            message += "%0A%0AMohon info pembayaran selanjutnya. Terima kasih!";
-            const phoneNumber = "6285706649837"; 
-            window.open(`https://wa.me/${phoneNumber}?text=${message}`, '_blank');
-        }
-
         // --- LOGIKA SLIDER ---
         let slideIndex = 0;
         const track = document.querySelector('.slider-track');

@@ -178,9 +178,6 @@
                 <h1>PT. BHASKARA JAYA</h1>
             </div>
         </a>
-        <div class="auth-area">
-            <a href="#">Login</a> / <a href="#">Register</a>
-        </div>
     </header>
 
     <nav class="main-nav">
@@ -196,7 +193,7 @@
                 <li><a href="#produk">PRODUK</a></li>
                 <li><a href="tentangkami.html">TENTANG KAMI</a></li>
                 <li><a href="contact.html">CONTACT</a></li>
-                <li><a onclick="toggleCart()">KERANJANG <span class="cart-badge">0</span></a></li>
+                <li><a onclick="toggleCart()">KERANJANG <span class="cart-badge"></span></a></li>
             </ul>
         </div>
     </nav>
@@ -221,8 +218,6 @@
                     <div class="prod-img-box"></span><img src="https://images.unsplash.com/photo-1632661674596-df8be070a5c5?w=500&auto=format&fit=crop" alt="iPhone"></div>
                     <div class="prod-info"><div class="prod-title">iPhone 13 128GB Brand New Resmi Indo</div><div class="prod-price">Rp8.587.000</div><div class="prod-meta"><span>Jakarta</span><span>10rb+ Terjual</span></div></div>
                     <div class="product-buttons">
-                        <button class="btn-add-cart" onclick="addToCart('iPhone 13 128GB', 8587000)">+ Keranjang</button>
-                        <button class="btn-buy-now" onclick="buyNow('iPhone 13 128GB', 8587000)">Beli Sekarang</button>
                     </div>
                 </div>
 
@@ -230,8 +225,7 @@
                     <div class="prod-img-box"><span class="mall-badge" style="background: purple;">Star</span><img src="https://i.imgur.com/FJLaEUd.jpeg" alt="MLBB"></div>
                     <div class="prod-info"><div class="prod-title">Akun Sultan MLBB Full Skin Legend</div><div class="prod-price">Rp5.000.000</div><div class="prod-meta"><span>Sidoarjo</span><span>149 Skin</span></div></div>
                     <div class="product-buttons">
-                        <button class="btn-add-cart" onclick="addToCart('Akun MLBB Sultan', 5000000)">+ Keranjang</button>
-                        <button class="btn-buy-now" onclick="buyNow('Akun MLBB Sultan', 5000000)">Beli Sekarang</button>
+
                     </div>
                 </div>
 
@@ -239,8 +233,6 @@
                     <div class="prod-img-box"><alt="Sweety"></div>
                     <div class="prod-info"><div class="prod-title">Sweety Bronze Dry X-Pert Pants M 34</div><div class="prod-price">Rp41.100</div><div class="prod-meta"><span>Jakarta</span><span>3rb+ Terjual</span></div></div>
                     <div class="product-buttons">
-                        <button class="btn-add-cart" onclick="addToCart('Sweety Bronze M34', 41100)">+ Keranjang</button>
-                        <button class="btn-buy-now" onclick="buyNow('Sweety Bronze M34', 41100)">Beli Sekarang</button>
                     </div>
                 </div>
 
@@ -248,8 +240,7 @@
                     <div class="prod-img-box"><alt="Minyak"></div>
                     <div class="prod-info"><div class="prod-title">Minyak Goreng SunCo 2 Liter Pouch</div><div class="prod-price">Rp30.000</div><div class="prod-meta"><span>Banyuwangi</span><span>2rb+ Terjual</span></div></div>
                     <div class="product-buttons">
-                        <button class="btn-add-cart" onclick="addToCart('Minyak SunCo 2L', 30000)">+ Keranjang</button>
-                        <button class="btn-buy-now" onclick="buyNow('Minyak SunCo 2L', 30000)">Beli Sekarang</button>
+
                     </div>
                 </div>
 
@@ -257,8 +248,6 @@
                     <div class="prod-img-box"><alt="Monitor"></div>
                     <div class="prod-info"><div class="prod-title">GOOJODOQ 15,6" FHD 1080P Portable Monitor</div><div class="prod-price">Rp1.530.000</div><div class="prod-meta"><span>Tangerang</span><span>750+ Terjual</span></div></div>
                     <div class="product-buttons">
-                        <button class="btn-add-cart" onclick="addToCart('Monitor Portable', 1530000)">+ Keranjang</button>
-                        <button class="btn-buy-now" onclick="buyNow('Monitor Portable', 1530000)">Beli Sekarang</button>
                     </div>
                 </div>
 
@@ -266,8 +255,6 @@
                     <div class="prod-img-box"><alt="Kasur"></div>
                     <div class="prod-info"><div class="prod-title">Kasur Busa Inoac Asli Garansi 10 Tahun</div><div class="prod-price">Rp350.000</div><div class="prod-meta"><span>Bekasi</span><span>1rb+ Terjual</span></div></div>
                     <div class="product-buttons">
-                        <button class="btn-add-cart" onclick="addToCart('Kasur Inoac', 350000)">+ Keranjang</button>
-                        <button class="btn-buy-now" onclick="buyNow('Kasur Inoac', 350000)">Beli Sekarang</button>
                     </div>
                 </div>
 
@@ -280,16 +267,6 @@
             <div class="cart-header">
                 <span>Keranjang Belanja</span>
                 <span onclick="toggleCart()" style="cursor:pointer; font-size:20px;">✕</span>
-            </div>
-            <div class="cart-body" id="cartItems">
-                <p style="text-align:center; color:#888;">Keranjang Anda masih kosong.</p>
-            </div>
-            <div class="cart-footer">
-                <div style="display:flex; justify-content:space-between; font-weight:bold; margin-bottom:10px;">
-                    <span>Total:</span>
-                    <span id="cartTotal">Rp0</span>
-                </div>
-                <button class="btn-checkout" onclick="checkoutWhatsApp()">Checkout Keranjang via WhatsApp</button>
             </div>
         </div>
     </div>
@@ -349,94 +326,6 @@
     </footer>
 
     <script>
-        // --- DATA KERANJANG ---
-        let cart = [];
-
-        // Fungsi Tambah ke Keranjang
-        function addToCart(productName, price) {
-            const existingItem = cart.find(item => item.name === productName);
-            if (existingItem) {
-                existingItem.qty++;
-            } else {
-                cart.push({ name: productName, price: price, qty: 1 });
-            }
-            updateCartDisplay();
-            alert("✅ " + productName + " berhasil masuk keranjang!");
-        }
-
-        // Fungsi Beli Sekarang (Langsung ke WA)
-        function buyNow(productName, price) {
-            let message = "Halo Admin PT. Bhaskara Jaya, saya mau beli produk ini secara langsung:%0A%0A";
-            message += `- ${productName} (1x) = Rp${price.toLocaleString()}%0A`;
-            message += `%0A*Total Bayar: Rp${price.toLocaleString()}*`;
-            message += "%0A%0AMohon info pembayaran selanjutnya. Terima kasih!";
-            
-            const phoneNumber = "6285706649837"; 
-            window.open(`https://wa.me/${phoneNumber}?text=${message}`, '_blank');
-        }
-
-        // Fungsi Hapus Barang
-        function removeFromCart(index) {
-            cart.splice(index, 1);
-            updateCartDisplay();
-        }
-
-        // Fungsi Update Tampilan Keranjang
-        function updateCartDisplay() {
-            const cartList = document.getElementById('cartItems');
-            const totalEl = document.getElementById('cartTotal');
-            const badge = document.querySelector('.cart-badge');
-            
-            cartList.innerHTML = '';
-            let totalPrice = 0;
-            let totalQty = 0;
-
-            if (cart.length === 0) {
-                cartList.innerHTML = '<p style="text-align:center; color:#888;">Keranjang Anda masih kosong.</p>';
-            } else {
-                cart.forEach((item, index) => {
-                    totalPrice += item.price * item.qty;
-                    totalQty += item.qty;
-                    const itemHTML = `
-                        <div class="cart-item">
-                            <div class="item-details">
-                                <h4>${item.name}</h4>
-                                <p>Rp${item.price.toLocaleString()} x ${item.qty}</p>
-                            </div>
-                            <div class="btn-remove" onclick="removeFromCart(${index})">🗑️</div>
-                        </div>
-                    `;
-                    cartList.innerHTML += itemHTML;
-                });
-            }
-            totalEl.innerText = 'Rp' + totalPrice.toLocaleString();
-            badge.innerText = totalQty;
-        }
-
-        function toggleCart() {
-            const overlay = document.getElementById('cartOverlay');
-            overlay.classList.toggle('active');
-        }
-
-        // Fungsi Checkout Keranjang
-        function checkoutWhatsApp() {
-            if (cart.length === 0) {
-                alert("Keranjang kosong! Silakan pilih barang dulu.");
-                return;
-            }
-            let message = "Halo Admin PT. Bhaskara Jaya, saya mau pesan via Keranjang:%0A%0A";
-            let grandTotal = 0;
-            cart.forEach(item => {
-                let subtotal = item.price * item.qty;
-                grandTotal += subtotal;
-                message += `- ${item.name} (${item.qty}x) = Rp${subtotal.toLocaleString()}%0A`;
-            });
-            message += `%0A*Total Bayar: Rp${grandTotal.toLocaleString()}*`;
-            message += "%0A%0AMohon info pembayaran selanjutnya. Terima kasih!";
-            const phoneNumber = "6285706649837"; 
-            window.open(`https://wa.me/${phoneNumber}?text=${message}`, '_blank');
-        }
-
         // --- SLIDER & MENU ---
         let slideIndex = 0;
         const track = document.querySelector('.slider-track');
